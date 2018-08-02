@@ -6,7 +6,6 @@ import {
     Input,
     List, ListItem
 } from 'native-base';
-import db from './data/backend-interface';
 import SearchHeader from './component/search-dialog';
 
 const NO_RECORD = [{ desc: '无结果' }];

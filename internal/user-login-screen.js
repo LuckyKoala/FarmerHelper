@@ -15,7 +15,7 @@ export default class UserLoginScreen extends Component {
     onLogin(state) {
         let {username, password} = state;
         if(username==='admin' && password==='admin') {
-            this.props.navigation.navigate('Drawer');
+            this.props.navigation.navigate('Home');
         } else {
             Toast.show({
                 text: "用户名或密码错误!",

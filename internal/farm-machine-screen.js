@@ -9,10 +9,7 @@ import {
 } from 'native-base';
 import { TouchableOpacity, SectionList } from 'react-native';
 import SearchHeader from './component/search-dialog';
-import db from './data/backend-interface';
 import groupBy from 'lodash.groupby';
-
-const machines = db.machine.getAll();
 
 function transform(obj) {
     let arr = [];
@@ -24,6 +21,7 @@ function transform(obj) {
 
 export default class FarmMachineScreen extends Component {
   render() {
+      const machines = db.machine.getAll();
     return (
       <Container style={{backgroundColor: "#fff"}}>
         <SearchHeader navigation={this.props.navigation} selected='machine' />
@@ -89,6 +87,10 @@ export default class FarmMachineScreen extends Component {
                 <Button active vertical>
                     <Icon active name="bicycle" />
                     <Text>农机</Text>
+                </Button>
+                <Button vertical onPress={() => this.props.navigation.navigate('Post')}>
+                    <Icon name="add" />
+                    <Text>发布</Text>
                 </Button>
                 <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
                     <Icon name="chatboxes" />

@@ -91,12 +91,12 @@ export default class UserHomeScreen extends Component {
             <FooterTab>
                 <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
                     <Icon name="flame" />
-                    <Text>首页</Text>
+                    <Text>农事</Text>
                 </Button>
-                <Button vertical onPress={() => this.props.navigation.navigate('FarmMachine')}>
-                    <Icon name="bicycle" />
-                    <Text>农机</Text>
-                </Button>
+            <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+            <Icon name="map" />
+            <Text>地图</Text>
+            </Button>
                 <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
                     <Icon name="chatboxes" />
                     <Text>消息</Text>

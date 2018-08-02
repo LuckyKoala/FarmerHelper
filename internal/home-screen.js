@@ -9,14 +9,8 @@ import { Dimensions, View, Image, TouchableOpacity, StatusBar } from 'react-nati
 import Carousel from 'react-native-banner-carousel';
 import SearchHeader from './component/search-dialog';
 
-import db from './data/backend-interface';
-
 const BannerWidth = Dimensions.get('window').width;
 const BannerHeight = 260;
-
-const articles = db.article.getAll();
-const fields = db.field.getAll();
-const persons = db.person.getAll();
 
 export default class HomeScreen extends Component {
     showArticle(article) {
@@ -50,6 +44,10 @@ export default class HomeScreen extends Component {
     }
 
   render() {
+    const articles = db.article.getAll();
+    const fields = db.field.getAll();
+    const persons = db.person.getAll();
+
     return (
        <Container style={{backgroundColor: "#fff"}}>
         <StatusBar hidden={true} />
@@ -98,12 +96,12 @@ export default class HomeScreen extends Component {
           <FooterTab>
             <Button active vertical>
               <Icon active name="flame" />
-              <Text>首页</Text>
+              <Text>农事</Text>
             </Button>
-            <Button vertical onPress={() => this.props.navigation.navigate('FarmMachine')}>
-              <Icon name="bicycle" />
-              <Text>农机</Text>
-            </Button>
+                <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                    <Icon name="map" />
+                    <Text>地图</Text>
+                </Button>
             <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
               <Icon name="chatboxes" />
               <Text>消息</Text>
