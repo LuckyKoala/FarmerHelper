@@ -2,7 +2,6 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { Root } from "native-base";
 import { StackNavigator, DrawerNavigator } from "react-navigation";
-import Expo, { Font, AppLoading } from "expo";
 
 import Storage from 'react-native-storage';
 import { AsyncStorage } from 'react-native';
@@ -64,27 +63,11 @@ const AppNavigator = StackNavigator(
 export default class HomeNav extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { loading: true };
-    }
-
-    async componentDidMount() {
-        await Font.loadAsync({
-            Roboto: require("native-base/Fonts/Roboto.ttf"),
-            Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-        });
-        this.setState({ loading: false });
     }
 
     render() {
-        if (this.state.loading) {
-            return (
-                    <Root>
-                    <AppLoading />
-                    </Root>
-            );
-        }
         return (
-                <Root style={{paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
+                <Root>
                 <AppNavigator />
                 </Root>
         );
