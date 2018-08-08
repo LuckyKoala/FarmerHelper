@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/luckykoala/Code/Dev/javascript/FarmerHelper/android/app/build/intermediates/res/merged/release/drawable-hdpi-v4/marker.png",
+        "source": "/home/luckykoala/Code/Dev/javascript/FarmerHelper/android/app/build/intermediates/exploded-aar/FarmerHelper/react-native-baidumap-sdk/unspecified/res/drawable-hdpi-v4/marker.png"
+    },
+    {
+        "merged": "/home/luckykoala/Code/Dev/javascript/FarmerHelper/android/app/build/intermediates/res/merged/release/drawable-hdpi-v4/callout.9.png",
+        "source": "/home/luckykoala/Code/Dev/javascript/FarmerHelper/android/app/build/intermediates/exploded-aar/FarmerHelper/react-native-baidumap-sdk/unspecified/res/drawable-hdpi-v4/callout.9.png"
+    }
+]

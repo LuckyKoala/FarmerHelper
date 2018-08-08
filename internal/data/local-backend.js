@@ -5,15 +5,49 @@ import initialField from './local-initial-data/field.json';
 import initialPerson from './local-initial-data/person.json';
 import initialMachine from './local-initial-data/machine.json';
 import initialMessage from './local-initial-data/message.json';
-let schema = require('js-schema');
 
-let shouldInit = true;
+import Storage from 'react-native-storage';
+import { AsyncStorage } from 'react-native';
+
+var storage = new Storage({
+	  size: 1000,
+	  storageBackend: AsyncStorage,
+	  defaultExpires: null,
+	  enableCache: true,
+	  sync : {
+		    // we'll talk about the details later.
+	  }
+});
 
 class Data {
     constructor(key, initialData) {
         this.key = key;
-        if(shouldInit) this.data = initialData;
-        else this.loadAll();
+        this.initialData = initialData;
+    }
+
+    async init() {
+        try {
+            let hasInit = await storage.load({
+                key: 'systemInit',
+                id: this.key
+            });
+            if(!hasInit) {
+                this.initialData.map(val => this.save(val));
+                await storage.save({
+                    key: 'systemInit',
+                    id: this.key,
+                    data: true
+                });
+            }
+        } catch(err) {
+	          console.warn(err.message);
+            this.initialData.map(val => this.save(val));
+            await storage.save({
+                key: 'systemInit',
+                id: this.key,
+                data: true
+            });
+        }
     }
 
     save(obj) {
@@ -25,40 +59,26 @@ class Data {
     }
 
     add(obj) {
-        this.data.append(obj);
         this.save(obj);
     }
 
     update(id, val) {
-        this.data[id] = val;
         this.save(val);
     }
 
     filter(predicate) {
-        return this.data.filter(predicate);
+        return this.getAll().then(vals => vals.filter(predicate));
     }
 
     get(id) {
-        return this.data[id];
+        return storage.load({
+	          key: this.key,
+	          id: id
+        });
     }
 
     getAll() {
-        return this.data.slice();
-    }
-
-    saveAll() {
-        this.data.map(val => this.save(val));
-        storage.save({
-            key: 'system',
-            id: 'init',
-            data: true
-        });
-    }
-
-    loadAll() {
-        storage.getAllDataForKey(this.key).then(vals => {
-            this.data = vals;
-        });
+        return storage.getAllDataForKey(this.key);
     }
 }
 
@@ -68,18 +88,7 @@ let field = new Data('field', initialField);
 let person = new Data('person', initialPerson);
 let machine = new Data('machine', initialMachine);
 let message = new Data('message', initialMessage);
-
-function checkInitStatus() {
-    storage.load({
-	      key: 'system',
-	      id: 'init'
-    }).then(ret => {
-        shouldInit = ret;
-    }).catch(err => {
-        shouldInit = true;
-	      console.warn(err.message);
-    });
-}
+let currentUser = new Data('currentUser', [{ id: 0, userId: -1 }]);
 
 module.exports = {
     article,
@@ -88,19 +97,5 @@ module.exports = {
     person,
     machine,
     message,
-    checkInitStatus
+    currentUser
 };
-
-class Database {
-    //农民信息
-    //简历信息
-
-    //农田信息
-    //招聘信息
-
-    //个人讯息
-    //交易信息
-    //信用评价
-    //动态历史
-    //钱包信息
-}

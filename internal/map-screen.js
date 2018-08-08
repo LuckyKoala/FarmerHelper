@@ -1,48 +1,63 @@
-import React, { Component  } from 'react';
-import {
-    Container, Header, Title, Content,
-    Text, Button, Icon,
-    Left, Right, Body,
-    Footer, FooterTab
-} from 'native-base';
+import React, { Component } from 'react'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { MapView, Location } from 'react-native-baidumap-sdk'
+import icon from '../assets/ic_my_location.png'
 
-export default class MapScreen extends Component {
+const style = StyleSheet.create({
+  button: {
+    position: 'absolute',
+    right: 16,
+    bottom: 16,
+    backgroundColor: '#fff',
+    borderRadius: 40,
+    elevation: 2,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    margin: 12,
+    tintColor: '#616161',
+  },
+})
+
+export default class MapViewExample extends Component {
+  static navigationOptions = { title: 'Location in MapView' }
+
+  state = {}
+
+  async componentDidMount() {
+    await Location.init()
+    Location.setOptions({ gps: true })
+    this.listener = Location.addLocationListener(location => {
+      this.setState({ location })
+    })
+    Location.start()
+  }
+
+  componentWillUnmount() {
+    Location.stop()
+    this.listener.remove()
+  }
+
+  location = () => this.mapView.setStatus({ center: this.state.location }, 1000)
+
   render() {
     return (
-      <Container style={{backgroundColor: "#fff"}}>
-        <Header>
-          <Left />
-          <Body>
-            <Title>地图</Title>
-          </Body>
-          <Right />
-        </Header>
-
-        <Content padder>
-          <Text>暂不支持</Text>
-        </Content>
-
-            <Footer>
-            <FooterTab>
-            <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
-            <Icon name="flame" />
-            <Text>农事</Text>
-            </Button>
-            <Button active vertical>
-            <Icon active name="map" />
-            <Text>地图</Text>
-            </Button>
-            <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
-            <Icon name="chatboxes" />
-            <Text>消息</Text>
-            </Button>
-            <Button vertical onPress={() => this.props.navigation.navigate('UserHome')}>
-            <Icon name="person" />
-            <Text>我</Text>
-            </Button>
-            </FooterTab>
-            </Footer>
-      </Container>
-    );
+      <View style={StyleSheet.absoluteFill}>
+        <MapView
+          ref={ref => this.mapView = ref}
+          style={StyleSheet.absoluteFill}
+          zoomLevel={18}
+          location={this.state.location}
+          locationEnabled
+          zoomControlsDisabled
+        />
+        <View style={style.button}>
+          <TouchableOpacity onPress={this.location}>
+            <Image style={style.icon} source={icon} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
   }
 }

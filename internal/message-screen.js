@@ -6,81 +6,118 @@ import {
     Tabs, Tab, List, ListItem,
     Footer, FooterTab
 } from 'native-base';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View, ActivityIndicator } from 'react-native';
+import UserLogin from './user-login-screen.js';
 
 export default class MessageScreen extends Component {
     showMessage(message) {
         this.props.navigation.navigate('MessageDetail', { messageBody: message});
     }
 
+    state = {
+        externalData: null,
+    };
 
-  render() {
-      const currentUser = db.user.filter(p => p.username==="admin")[0];
-      let messageObjs;
-      if(currentUser===undefined) {
-          messageObjs = [];
-      } else {
-          const uid = currentUser.id;
-          messageObjs = db.message.filter(m => m.persons.includes(uid)).map((v,i) => {
-              return {
-                  target: db.user.get(v.persons.filter(i => i!=uid)[0]).nickname,
-                  val: v,
-                  id: i
-              };
-          });
-      }
+    async asyncLoadData() {
+        let currentUserStatus = await db.currentUser.get(0);
+        let currentUserId = currentUserStatus.userId;
+        if(currentUserId == -1) {
+            return false;
+        } else {
+            let messageObjs = await db.message.filter(m => m.persons.includes(currentUserId));
+            let users = await db.user.getAll();
+            messageObjs = messageObjs.map((v,i) => {
+                let targetUser = users[v.persons.filter(i => i!=currentUserId)[0]];
+                return {
+                    target: targetUser.nickname,
+                    val: v,
+                    id: i
+                };
+            });
+            return messageObjs;
+        }
+    }
 
-    return (
-      <Container style={{backgroundColor: "#fff"}}>
-        <Header>
-          <Left />
-          <Body>
-            <Title>消息</Title>
-          </Body>
-          <Right>
-            <Button
-              transparent
-            >
-              <Icon name="add" />
-            </Button>
-          </Right>
-        </Header>
+    componentDidMount() {
+        this._asyncRequest = this.asyncLoadData().then(
+            externalData => {
+                this._asyncRequest = null;
+                this.setState({externalData});
+            }
+        );
+    }
 
-        <Content padder>
-            <List dataArray={messageObjs}
-                renderRow={(item) =>
-                   <ListItem>
-                        <TouchableOpacity onPress={() => this.showMessage(item)}>
-                           <Text>{item.target}</Text>
-                        </TouchableOpacity>
-                   </ListItem>
-                  }>
-            </List>
+    componentWillUnmount() {
+        //if (this._asyncRequest) {
+          //  this._asyncRequest.cancel();
+        //}
+    }
 
-        </Content>
+    render() {
+        if (this.state.externalData === null) {
+            return (
+                <View style={[helperStyles.container, helperStyles.horizontal]}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+            );
+        } else if(this.state.externalData === false) {
+            return (
+                <UserLogin />
+            );
+        } else {
+            let messageObjs = this.state.externalData;
+            return (
+                <Container style={{backgroundColor: "#fff"}}>
+                    <Header>
+                    <Left />
+                    <Body>
+                        <Title>消息</Title>
+                    </Body>
+                    <Right>
+                        <Button
+                        transparent
+                        >
+                        <Icon name="add" />
+                        </Button>
+                    </Right>
+                    </Header>
 
-         <Footer>
-            <FooterTab>
-                <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
-                    <Icon name="flame" />
-                    <Text>农事</Text>
-                </Button>
-            <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
-            <Icon name="map" />
-            <Text>地图</Text>
-            </Button>
-                <Button active vertical>
-                    <Icon active name="chatboxes" />
-                    <Text>消息</Text>
-                </Button>
-                <Button vertical onPress={() => this.props.navigation.navigate('UserHome')}>
-                    <Icon name="person" />
-                    <Text>我</Text>
-                </Button>
-            </FooterTab>
-      </Footer>
+                    <Content padder>
+                        <List dataArray={messageObjs}
+                            renderRow={(item) =>
+                            <ListItem>
+                                    <TouchableOpacity onPress={() => this.showMessage(item)}>
+                                    <Text>{item.target}</Text>
+                                    </TouchableOpacity>
+                            </ListItem>
+                            }>
+                        </List>
 
-      </Container>
-    );
+                    </Content>
+
+                    <Footer>
+                        <FooterTab>
+                            <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
+                                <Icon name="flame" />
+                                <Text>农事</Text>
+                            </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                        <Icon name="map" />
+                        <Text>地图</Text>
+                        </Button>
+                            <Button active vertical>
+                                <Icon active name="chatboxes" />
+                                <Text>消息</Text>
+                            </Button>
+                            <Button vertical onPress={() => this.props.navigation.navigate('UserHome')}>
+                                <Icon name="person" />
+                                <Text>我</Text>
+                            </Button>
+                        </FooterTab>
+                    </Footer>
+
+                </Container>
+            );
+        }
+    }
   }
-}
