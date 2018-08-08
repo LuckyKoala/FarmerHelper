@@ -7,6 +7,9 @@ import {
     Thumbnail,
     Footer, FooterTab
 } from 'native-base';
+import {
+    View, ActivityIndicator
+} from 'react-native';
 import UserLogin from './user-login-screen';
 
 export default class UserHomeScreen extends Component {
@@ -25,7 +28,7 @@ export default class UserHomeScreen extends Component {
         }
     }
     componentDidMount() {
-        this._asyncRequest = asyncLoadData().then(
+        this._asyncRequest = this.asyncLoadData().then(
             externalData => {
                 this._asyncRequest = null;
                 this.setState({externalData});
@@ -155,8 +158,4 @@ export default class UserHomeScreen extends Component {
                 );
         }
     }
-
-  render() {
-    
-  }
 }
