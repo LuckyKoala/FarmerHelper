@@ -42,11 +42,16 @@ export default class UserHomeScreen extends Component {
         }
     }
 
+    async logout() {
+        await db.currentUser.update(0, {id: 0, userId: -1});
+        this.setState({externalData: false});
+    }
+
     render() {
         if (this.state.externalData === null) {
             return (
                     <View style={[helperStyles.container, helperStyles.horizontal]}>
-                    <ActivityIndicator size="large" color="#0000ff" />
+                        <ActivityIndicator size="large" color="#0000ff" />
                     </View>
             );
         } else if(this.state.externalData === false) {
@@ -64,7 +69,8 @@ export default class UserHomeScreen extends Component {
                     </Body>
                     <Right>
                         <Button
-                        transparent
+                            transparent
+                            onPress={() => this.logout()}
                         >
                         <Icon name="settings" />
                         </Button>

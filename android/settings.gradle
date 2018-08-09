@@ -1,5 +1,7 @@
 rootProject.name = 'FarmerHelper'
 include ':react-native-baidumap-sdk'
 project(':react-native-baidumap-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-baidumap-sdk/lib/android')
+include ':react-native-baidumap-sdk'
+project(':react-native-baidumap-sdk').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-baidumap-sdk/lib/android')
 
 include ':app'
