@@ -22,10 +22,12 @@ import FieldDetailScreen from './internal/field-detail-screen';
 import MessageDetailScreen from './internal/message-detail-screen';
 import MachineDetailScreen from './internal/machine-detail-screen';
 import UserLoginScreen from './internal/user-login-screen';
+import UserRegisterScreen from './internal/user-register-screen';
 
 const AppWithLoginNavigator = StackNavigator(
     {
         UserLogin: { screen: UserLoginScreen },
+        UserRegister: { screen: UserRegisterScreen },
         Home: HomeScreen,
         Message: MessageScreen,
         UserHome: UserHomeScreen,
@@ -48,6 +50,7 @@ const AppWithLoginNavigator = StackNavigator(
 const AppNavigator = StackNavigator(
     {
         UserLogin: { screen: UserLoginScreen },
+        UserRegister: { screen: UserRegisterScreen },
         Home: HomeScreen,
         Message: MessageScreen,
         UserHome: UserHomeScreen,
@@ -120,9 +123,9 @@ export default class HomeNav extends React.Component {
             );
         } else if(this.state.externalData.userId != -1) {
             return (
-                    <Root>
+                <Root>
                     <AppNavigator />
-                    </Root>
+                </Root>
             );
         } else {
             return (

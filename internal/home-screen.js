@@ -72,9 +72,9 @@ export default class HomeScreen extends Component {
     render() {
         if (this.state.externalData === null) {
             return (
-                    <View style={[helperStyles.container, helperStyles.horizontal]}>
+                <View style={[helperStyles.container, helperStyles.horizontal]}>
                     <ActivityIndicator size="large" color="#0000ff" />
-                    </View>
+                </View>
             );
         } else {
             let { articles, fields, persons } = this.state.externalData;

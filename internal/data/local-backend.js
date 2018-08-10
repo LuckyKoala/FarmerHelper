@@ -31,8 +31,12 @@ class Data {
                 key: 'systemInit',
                 id: this.key
             });
-            if(!hasInit) {
+            if(hasInit) {
+                let vals = await this.getAll();
+                this.size = vals.length;
+            } else {
                 this.initialData.map(val => this.save(val));
+                this.size = this.initialData.length;
                 await storage.save({
                     key: 'systemInit',
                     id: this.key,
@@ -42,6 +46,7 @@ class Data {
         } catch(err) {
 	          console.warn(err.message);
             this.initialData.map(val => this.save(val));
+            this.size = this.initialData.length;
             await storage.save({
                 key: 'systemInit',
                 id: this.key,
@@ -59,6 +64,8 @@ class Data {
     }
 
     add(obj) {
+        obj.id = this.size;
+        this.size++;
         this.save(obj);
     }
 

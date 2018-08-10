@@ -2,8 +2,10 @@ import React, { Component  } from 'react';
 import {
     Container, Header, Title, Content,
     Text, Button, Icon,
-    Left, Right, Body
+    Left, Right, Body,
+    Card, CardItem, Thumbnail
 } from 'native-base';
+import { Image } from 'react-native';
 
 export default class FieldDetailScreen extends Component {
     render() {
@@ -28,10 +30,35 @@ export default class FieldDetailScreen extends Component {
                 </Header>
 
                 <Content padder>
-                    <Text style={{ fontWeight: 'bold' }}>地点： {field.pos}</Text>
-                    <Text>{field.desc}</Text>
-                    <Text>联系电话： {field.contact}</Text>
-                    <Text>发布人： 张晓春</Text>
+                    <Card style={{flex: 0}}>
+                        <CardItem>
+                            <Left>
+                                <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} />
+                                <Body>
+                                    <Text>NativeBase</Text>
+                                    <Text note>April 15, 2016</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                        <CardItem>
+                            <Body>
+                                <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Inernet.jpg'}} style={{height: 200, width: 200, flex: 1}}/>
+                                <Text>
+                                    {field.desc}
+                                </Text>
+                                <Text>联系电话： {field.contact}</Text>
+                                <Text>发布人： 张晓春</Text>
+                            </Body>
+                        </CardItem>
+                        <CardItem>
+                        <Left>
+                            <Button transparent textStyle={{color: '#87838B'}}>
+                            <Icon name="logo-github" />
+                                <Text>{field.pos}</Text>
+                            </Button>
+                        </Left>
+                        </CardItem>
+                    </Card>
                 </Content>
             </Container>
         );

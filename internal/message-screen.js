@@ -7,7 +7,6 @@ import {
     Footer, FooterTab
 } from 'native-base';
 import { TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import UserLogin from './user-login-screen.js';
 
 export default class MessageScreen extends Component {
     showMessage(message) {
@@ -22,7 +21,8 @@ export default class MessageScreen extends Component {
         let currentUserStatus = await db.currentUser.get(0);
         let currentUserId = currentUserStatus.userId;
         if(currentUserId == -1) {
-            return false;
+            this.props.navigation.navigate('UserLogin');
+            return null;
         } else {
             let messageObjs = await db.message.filter(m => m.persons.includes(currentUserId));
             let users = await db.user.getAll();
@@ -59,10 +59,6 @@ export default class MessageScreen extends Component {
                 <View style={[helperStyles.container, helperStyles.horizontal]}>
                     <ActivityIndicator size="large" color="#0000ff" />
                 </View>
-            );
-        } else if(this.state.externalData === false) {
-            return (
-                <UserLogin />
             );
         } else {
             let messageObjs = this.state.externalData;

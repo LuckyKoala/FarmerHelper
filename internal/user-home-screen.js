@@ -10,7 +10,6 @@ import {
 import {
     View, ActivityIndicator
 } from 'react-native';
-import UserLogin from './user-login-screen';
 
 export default class UserHomeScreen extends Component {
     state = {
@@ -21,7 +20,8 @@ export default class UserHomeScreen extends Component {
         let status = await db.currentUser.get(0);
         let uid = status.userId;
         if(uid==-1) {
-            return false;
+            this.props.navigation.navigate('UserLogin');
+            return null;
         } else {
             let user = await db.user.get(uid);
             return user.nickname;
@@ -44,7 +44,7 @@ export default class UserHomeScreen extends Component {
 
     async logout() {
         await db.currentUser.update(0, {id: 0, userId: -1});
-        this.setState({externalData: false});
+        this.props.navigation.navigate('UserLogin');
     }
 
     render() {
@@ -53,10 +53,6 @@ export default class UserHomeScreen extends Component {
                     <View style={[helperStyles.container, helperStyles.horizontal]}>
                         <ActivityIndicator size="large" color="#0000ff" />
                     </View>
-            );
-        } else if(this.state.externalData === false) {
-            return (
-                <UserLogin />
             );
         } else {
             let nickname = this.state.externalData;

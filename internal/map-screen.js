@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { MapView, Location } from 'react-native-baidumap-sdk'
-import icon from '../assets/ic_my_location.png'
+import React, { Component } from 'react';
+import {
+    Image, StyleSheet, TouchableOpacity, View, Alert,
+    ActivityIndicator
+} from 'react-native';
+import { MapView, Location } from 'react-native-baidumap-sdk';
+import icon from '../assets/ic_my_location.png';
 
 const style = StyleSheet.create({
   button: {
@@ -18,46 +21,50 @@ const style = StyleSheet.create({
     margin: 12,
     tintColor: '#616161',
   },
-})
+});
 
 export default class MapViewExample extends Component {
-  static navigationOptions = { title: 'Location in MapView' }
+    state = {};
 
-  state = {}
+    async componentDidMount() {
+        await Location.init();
+        Location.setOptions({ gps: true });
+        this.listener = Location.addLocationListener(location => {
+            this.setState({ location });
+        });
+        Location.start();
+    }
 
-  async componentDidMount() {
-    await Location.init()
-    Location.setOptions({ gps: true })
-    this.listener = Location.addLocationListener(location => {
-      this.setState({ location })
-    })
-    Location.start()
-  }
+    componentWillUnmount() {
+        Location.stop();
+        this.listener.remove();
+        //if (this._asyncRequest) {
+          //  this._asyncRequest.cancel();
+        //}
+    }
 
-  componentWillUnmount() {
-    Location.stop()
-    this.listener.remove()
-  }
+    location = () => this.mapView.setStatus({ center: this.state.location }, 1000)
 
-  location = () => this.mapView.setStatus({ center: this.state.location }, 1000)
+    showCoordinate = coordinate => Alert.alert(`Lat: ${coordinate.latitude}, Lon: ${coordinate.longitude}`);
 
-  render() {
-    return (
-      <View style={StyleSheet.absoluteFill}>
-        <MapView
-          ref={ref => this.mapView = ref}
-          style={StyleSheet.absoluteFill}
-          zoomLevel={18}
-          location={this.state.location}
-          locationEnabled
-          zoomControlsDisabled
-        />
-        <View style={style.button}>
-          <TouchableOpacity onPress={this.location}>
-            <Image style={style.icon} source={icon} />
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-  }
+    render() {
+        return (
+                <View style={StyleSheet.absoluteFill}>
+                    <MapView
+                        ref={ref => this.mapView = ref}
+                        style={StyleSheet.absoluteFill}
+                        zoomLevel={18}
+                        location={this.state.location}
+                        locationEnabled
+                        onClick={this.showCoordinate}
+                        zoomControlsDisabled
+                    />
+                    <View style={style.button}>
+                        <TouchableOpacity onPress={this.location}>
+                            <Image style={style.icon} source={icon} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+        );
+    }
 }

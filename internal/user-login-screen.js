@@ -4,12 +4,13 @@ import {
     Container, Header, Content, Form, Item, Input, Label, Button,
     Left, Right, Body, Title, Text, Toast
 } from 'native-base';
+
 export default class UserLoginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
-            password: ''
+            password: '',
         };
     }
 
@@ -28,7 +29,7 @@ export default class UserLoginScreen extends Component {
 
         let userFound = await db.user.filter(obj => obj.username==username && obj.password==password);
         if(userFound.length != 0) {
-            db.currentUser.update(0, { id: 0, userId: userFound[0].id });
+            await db.currentUser.update(0, { id: 0, userId: userFound[0].id });
             this.props.navigation.navigate('Home');
         } else {
             Toast.show({
@@ -61,6 +62,7 @@ export default class UserLoginScreen extends Component {
                         <Item floatingLabel last>
                         <Label>密码</Label>
                         <Input
+                            secureTextEntry={true}
                             onChangeText={(text) => this.setState({password: text})}
                             value={this.state.password}
                         />
@@ -76,6 +78,7 @@ export default class UserLoginScreen extends Component {
                         </Button>
                         <Button
                             block
+                            onPress={() => this.props.navigation.navigate('UserRegister')}
                             transparent>
                             <Text style={{fontSize: 20, color: '#595856'}}>注册</Text>
                         </Button>
