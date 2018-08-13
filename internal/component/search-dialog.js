@@ -21,6 +21,18 @@ export default class SearchDialog extends Component {
         });
     }
 
+    onButtonClick() {
+        let search = {
+            category: this.state.selected,
+            keyword: this.state.text
+        };
+        if(this.props.refresh != null) {
+            this.props.refresh(search);
+        } else {
+            this.props.navigation.navigate('Search', { search });
+        }
+    }
+
     render() {
         return (
             <Header searchBar rounded>
@@ -41,7 +53,7 @@ export default class SearchDialog extends Component {
                             onChangeText={(text) => this.setState({text})}
                             value={this.state.text}
                     />
-                <Button transparent onPress={() => this.props.navigation.navigate('Search', { search: { category: this.state.selected, keyword: this.state.text } })}>
+                    <Button transparent onPress={() => this.onButtonClick()}>
                         <Icon active name="search" />
                     </Button>
                 </Item>

@@ -39,7 +39,7 @@ const AppWithLoginNavigator = StackNavigator(
         MachineDetail: { screen: MachineDetailScreen },
         MessageDetail: MessageDetailScreen,
         Post: PostScreen,
-        Map: MapScreen
+        Map: MapScreen,
     },
     {
         initialRouteName: 'UserLogin',
@@ -62,7 +62,7 @@ const AppNavigator = StackNavigator(
         MachineDetail: { screen: MachineDetailScreen },
         MessageDetail: MessageDetailScreen,
         Post: PostScreen,
-        Map: MapScreen
+        Map: MapScreen,
     },
     {
         initialRouteName: 'Home',

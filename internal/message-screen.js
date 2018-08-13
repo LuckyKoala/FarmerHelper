@@ -47,12 +47,6 @@ export default class MessageScreen extends Component {
         );
     }
 
-    componentWillUnmount() {
-        //if (this._asyncRequest) {
-          //  this._asyncRequest.cancel();
-        //}
-    }
-
     render() {
         if (this.state.externalData === null) {
             return (
@@ -82,9 +76,9 @@ export default class MessageScreen extends Component {
                         <List dataArray={messageObjs}
                             renderRow={(item) =>
                             <ListItem>
-                                    <TouchableOpacity onPress={() => this.showMessage(item)}>
+                                <TouchableOpacity onPress={() => this.showMessage(item)}>
                                     <Text>{item.target}</Text>
-                                    </TouchableOpacity>
+                                </TouchableOpacity>
                             </ListItem>
                             }>
                         </List>
@@ -97,10 +91,14 @@ export default class MessageScreen extends Component {
                                 <Icon name="flame" />
                                 <Text>农事</Text>
                             </Button>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
-                        <Icon name="map" />
-                        <Text>地图</Text>
-                        </Button>
+                            <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                                <Icon name="map" />
+                                <Text>地图</Text>
+                            </Button>
+                            <Button vertical onPress={() => this.props.navigation.navigate('Post')}>
+                                <Icon name="add" />
+                                <Text>发布</Text>
+                            </Button>
                             <Button active vertical>
                                 <Icon active name="chatboxes" />
                                 <Text>消息</Text>

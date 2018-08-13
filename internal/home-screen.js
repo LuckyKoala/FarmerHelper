@@ -63,10 +63,8 @@ export default class HomeScreen extends Component {
         );
     }
 
-    componentWillUnmount() {
-        //if (this._asyncRequest) {
-          //  this._asyncRequest.cancel();
-        //}
+    showFieldList() {
+        this.props.navigation.navigate('Search', {search: {category: 'field', keyword: ''}});
     }
 
     render() {
@@ -109,6 +107,13 @@ export default class HomeScreen extends Component {
                                     </ListItem>
                             }>
                             </List>
+                        <Button
+                            block
+                            style={{backgroundColor: '#34A853'}}
+                            onPress={() => this.showFieldList()}
+                        >
+                            <Text style={{fontSize: 20, color: '#FFF'}}>查看更多</Text>
+                        </Button>
                         </Tab>
                         <Tab heading="专业农友">
                         <List dataArray={persons}
@@ -126,20 +131,24 @@ export default class HomeScreen extends Component {
                 <Footer>
                 <FooterTab>
                     <Button active vertical>
-                    <Icon active name="flame" />
-                    <Text>农事</Text>
+                        <Icon active name="flame" />
+                        <Text>农事</Text>
                     </Button>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
-                            <Icon name="map" />
-                            <Text>地图</Text>
-                        </Button>
+                    <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                        <Icon name="map" />
+                        <Text>地图</Text>
+                    </Button>
+                    <Button vertical onPress={() => this.props.navigation.navigate('Post')}>
+                        <Icon name="add" />
+                        <Text>发布</Text>
+                    </Button>
                     <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
-                    <Icon name="chatboxes" />
-                    <Text>消息</Text>
+                        <Icon name="chatboxes" />
+                        <Text>消息</Text>
                     </Button>
                     <Button vertical onPress={() => this.props.navigation.navigate('UserHome')}>
-                    <Icon name="person" />
-                    <Text>我</Text>
+                        <Icon name="person" />
+                        <Text>我</Text>
                     </Button>
                 </FooterTab>
                 </Footer>

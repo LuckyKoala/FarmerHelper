@@ -4,7 +4,6 @@ import {
     Container, Header, Content, Form, Item, Input, Label, Button,
     Left, Right, Body, Title, Text, Toast
 } from 'native-base';
-import UserLogin from './user-login-screen';
 
 export default class UserRegisterScreen extends Component {
     constructor(props) {
@@ -60,18 +59,11 @@ export default class UserRegisterScreen extends Component {
                 type: "success",
                 duration: 1500
             });
-            this.setState({hasLogin: true});
+            this.props.navigation.navigate('UserLogin');
         }
     }
 
-
     render() {
-        if(this.state.hasLogin) {
-            return (
-                <UserLogin />
-            );
-        }
-
         return (
             <Container>
                 <Content>

@@ -5,6 +5,7 @@ import {
     Left, Right, Body
 } from 'native-base';
 
+// FIXME: Not changed yet
 export default class FieldDetailScreen extends Component {
     render() {
         const { navigation } = this.props;

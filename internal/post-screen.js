@@ -1,35 +1,33 @@
 import React, { Component  } from 'react';
 import {
-    Container, Header, Title, Content,
+    Container, Header, Title,
     Text, Button, Icon,
     Left, Right, Body,
+    Tabs, Tab,
     Footer, FooterTab
 } from 'native-base';
+import FarmerPostTab from './farmer-post-tab';
+import FieldPostTab from './field-post-tab';
+//import MachinePostTab from './machine-post-tab';
 
 export default class PostScreen extends Component {
+    navigateTo(name) {
+        this.props.navigation.navigate(name);
+    }
+
   render() {
     return (
-      <Container style={{backgroundColor: "#fff"}}>
-        <Header>
-          <Left>
-            <Button
-              transparent
-              onPress={() => this.props.navigation.openDrawer()}
-            >
-              <Icon name="ios-menu" />
-            </Button>
-          </Left>
-          <Body>
-            <Title>发布</Title>
-          </Body>
-          <Right />
-        </Header>
+        <Container style={{backgroundColor: "#fff"}}>
+            <Header hasTabs />
+            <Tabs>
+                <Tab heading="投递简历">
+                    <FarmerPostTab navigateTo={this.navigateTo.bind(this)} />
+                </Tab>
+                <Tab heading="农事发布">
+                    <FieldPostTab navigateTo={this.navigateTo.bind(this)} />
+                </Tab>
+            </Tabs>
 
-        <Content padder>
-          <Text>Content goes here</Text>
-        </Content>
-
-        
         <Footer>
             <FooterTab>
                 <Button vertical onPress={() => this.props.navigation.navigate('Home')}>

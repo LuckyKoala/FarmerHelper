@@ -140,10 +140,14 @@ export default class UserHomeScreen extends Component {
                                 <Icon name="flame" />
                                 <Text>农事</Text>
                             </Button>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
-                        <Icon name="map" />
-                        <Text>地图</Text>
-                        </Button>
+                            <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                                <Icon name="map" />
+                                <Text>地图</Text>
+                            </Button>
+                            <Button vertical onPress={() => this.props.navigation.navigate('Post')}>
+                                <Icon name="add" />
+                                <Text>发布</Text>
+                            </Button>
                             <Button vertical onPress={() => this.props.navigation.navigate('Message')}>
                                 <Icon name="chatboxes" />
                                 <Text>消息</Text>

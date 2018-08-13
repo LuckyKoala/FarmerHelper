@@ -7,7 +7,7 @@ import {
     List, ListItem
 } from 'native-base';
 import {
-    View, ActivityIndicator
+    View, ActivityIndicator, TouchableOpacity
 } from 'react-native';
 import SearchHeader from './component/search-dialog';
 
@@ -18,18 +18,24 @@ export default class SearchScreen extends Component {
         externalData: null,
     };
 
-    async asyncLoadData() {
-        const search = this.props.navigation.getParam('search');
+    async asyncLoadData(search) {
         const table = db[search.category];
         const keyword = search.keyword;
         let items = await table.filter(item => item.desc.includes(keyword));
         if(items.length===0) items=NO_RECORD;
 
-        return items;
+        return {
+            category: search.category,
+            items: items
+        };
     }
 
     componentDidMount() {
-        this._asyncRequest = this.asyncLoadData().then(
+        this.refresh(this.props.navigation.getParam('search'));
+    }
+
+    refresh(search) {
+        this._asyncRequest = this.asyncLoadData(search).then(
             externalData => {
                 this._asyncRequest = null;
                 this.setState({externalData});
@@ -37,10 +43,16 @@ export default class SearchScreen extends Component {
         );
     }
 
-    componentWillUnmount() {
-        if (this._asyncRequest) {
-            this._asyncRequest.cancel();
-        }
+    showField(field) {
+        this.props.navigation.navigate('FieldDetail', { field});
+    }
+
+    showMachine(machine) {
+        this.props.navigation.navigate('MachineDetail', { machine });
+    }
+
+    show(name, val) {
+        if(name==='field') this.showField(val);
     }
 
     render() {
@@ -51,16 +63,18 @@ export default class SearchScreen extends Component {
                 </View>
             );
         } else {
-            let items = this.state.externalData;
+            let {category, items} = this.state.externalData;
             return (
                 <Container style={{backgroundColor: "#fff"}}>
-                    <SearchHeader navigation={this.navigation} />
+                    <SearchHeader refresh={this.refresh.bind(this)} navigation={this.props.navigation} />
 
                     <Content padder>
                         <List dataArray={items}
                             renderRow={(item) =>
                                 <ListItem>
-                                    <Text>{item.desc}</Text>
+                                       <TouchableOpacity onPress={() => this.show(category, item)}>
+                                        <Text>{item.desc}</Text>
+                                    </TouchableOpacity>
                                 </ListItem>
                             }>
                         </List>

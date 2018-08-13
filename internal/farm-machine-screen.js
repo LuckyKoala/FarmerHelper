@@ -111,9 +111,9 @@ export default class FarmMachineScreen extends Component {
                             <Icon name="flame" />
                             <Text>首页</Text>
                         </Button>
-                        <Button active vertical>
-                            <Icon active name="bicycle" />
-                            <Text>农机</Text>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                            <Icon name="map" />
+                            <Text>地图</Text>
                         </Button>
                         <Button vertical onPress={() => this.props.navigation.navigate('Post')}>
                             <Icon name="add" />
