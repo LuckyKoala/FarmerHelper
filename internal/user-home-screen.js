@@ -68,7 +68,7 @@ export default class UserHomeScreen extends Component {
                             transparent
                             onPress={() => this.logout()}
                         >
-                        <Icon name="settings" />
+                            <Icon name="md-exit" />
                         </Button>
                     </Right>
                     </Header>
