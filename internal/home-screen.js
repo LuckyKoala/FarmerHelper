@@ -83,7 +83,7 @@ export default class HomeScreen extends Component {
                 <SearchHeader navigation={this.props.navigation} />
 
                 <Content padder>
-                    <View style={{flex: 4, backgroundColor: 'skyblue'}}>
+                    <View style={{flex: 4}}>
                         <Carousel
                         autoplay
                         autoplayTimeout={5000}
