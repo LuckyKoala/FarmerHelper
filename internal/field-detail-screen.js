@@ -81,9 +81,10 @@ export default class FieldDetailScreen extends Component {
                             </CardItem>
                             <CardItem>
                             <Right>
-                                <Button transparent textStyle={{color: '#87838B'}}>
-                                <Icon name="md-map" />
-                                    <Text>{field.pos}</Text>
+                    <Button transparent textStyle={{color: '#87838B'}}
+                        onPress={() => this.props.navigation.navigate('Map', {center: field.coordinate})}>
+                                    <Icon name="md-map" />
+                                    <Text>{field.pos || field.coordinate && field.coordinate.address}</Text>
                                 </Button>
                             </Right>
                             </CardItem>

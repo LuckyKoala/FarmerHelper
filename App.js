@@ -23,6 +23,7 @@ import MessageDetailScreen from './internal/message-detail-screen';
 import MachineDetailScreen from './internal/machine-detail-screen';
 import UserLoginScreen from './internal/user-login-screen';
 import UserRegisterScreen from './internal/user-register-screen';
+import MapSearchScreen from './internal/map-search-screen';
 
 const AppWithLoginNavigator = StackNavigator(
     {
@@ -40,6 +41,7 @@ const AppWithLoginNavigator = StackNavigator(
         MessageDetail: MessageDetailScreen,
         Post: PostScreen,
         Map: MapScreen,
+        MapSearch: MapSearchScreen,
     },
     {
         initialRouteName: 'UserLogin',
@@ -63,6 +65,7 @@ const AppNavigator = StackNavigator(
         MessageDetail: MessageDetailScreen,
         Post: PostScreen,
         Map: MapScreen,
+        MapSearch: MapSearchScreen,
     },
     {
         initialRouteName: 'Home',

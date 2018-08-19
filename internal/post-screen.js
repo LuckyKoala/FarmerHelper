@@ -10,23 +10,37 @@ import FarmerPostTab from './farmer-post-tab';
 import FieldPostTab from './field-post-tab';
 //import MachinePostTab from './machine-post-tab';
 
+//<FarmerPostTab navigateTo={this.navigateTo.bind(this)} />
 export default class PostScreen extends Component {
-    navigateTo(name) {
-        this.props.navigation.navigate(name);
+    needSync = false;
+
+    navigateTo(name, param) {
+        this.props.navigation.navigate(name, param);
     }
 
-  render() {
+    sync() {
+        if(!this.needSync) return false;
+        const {navigation} = this.props;
+        const data = navigation.getParam('data');
+        console.log('PostScreen: '+JSON.stringify(data));
+        this.needSync=false;
+        return data;
+    }
+
+    //根据用户身份来显示对应的发布页面
+    render() {
+        this.needSync = true;
+
     return (
         <Container style={{backgroundColor: "#fff"}}>
-            <Header hasTabs />
-            <Tabs>
-                <Tab heading="投递简历">
-                    <FarmerPostTab navigateTo={this.navigateTo.bind(this)} />
-                </Tab>
-                <Tab heading="农事发布">
-                    <FieldPostTab navigateTo={this.navigateTo.bind(this)} />
-                </Tab>
-            </Tabs>
+            <Header>
+                <Left />
+                <Body>
+                    <Title>农事发布</Title>
+                </Body>
+                <Right />
+            </Header>
+            <FieldPostTab navigateTo={this.navigateTo.bind(this)} sync={this.sync.bind(this)} />
 
         <Footer>
             <FooterTab>
@@ -34,9 +48,9 @@ export default class PostScreen extends Component {
                     <Icon name="flame" />
                     <Text>首页</Text>
                 </Button>
-                <Button vertical onPress={() => this.props.navigation.navigate('FarmMachine')}>
-                    <Icon name="bicycle" />
-                    <Text>农机</Text>
+                <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
+                    <Icon name="map" />
+                    <Text>地图</Text>
                 </Button>
                 <Button active vertical >
                     <Icon active name="add" />
