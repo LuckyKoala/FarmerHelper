@@ -76,7 +76,6 @@ export default class FieldDetailScreen extends Component {
                                         {field.desc}
                                     </Text>
                                     <Text>联系电话： {field.contact}</Text>
-                                    <Text>发布人： 张晓春</Text>
                                 </Body>
                             </CardItem>
                             <CardItem>
