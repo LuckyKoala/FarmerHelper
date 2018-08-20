@@ -76,7 +76,7 @@ class MapScreen extends Component {
         const center = this.props.navigation.getParam('center', false);
         if(center) {
             let that = this;
-            this.setTimeout(() => this.mapView.setStatus({ center: center }, 1000), 500);
+            this.setTimeout(() => this.mapView.setStatus({ center: center, zoomLevel: 18 }, 1000), 500);
         }
     }
 
