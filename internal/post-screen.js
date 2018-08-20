@@ -45,7 +45,7 @@ export default class PostScreen extends Component {
         <Footer>
             <FooterTab>
                 <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
-                    <Icon name="flame" />
+                    <Icon name="md-sunny" />
                     <Text>首页</Text>
                 </Button>
                 <Button vertical onPress={() => this.props.navigation.navigate('Map')}>

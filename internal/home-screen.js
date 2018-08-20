@@ -131,7 +131,7 @@ export default class HomeScreen extends Component {
                 <Footer>
                 <FooterTab>
                     <Button active vertical>
-                        <Icon active name="flame" />
+                        <Icon active name="md-sunny" />
                         <Text>农事</Text>
                     </Button>
                     <Button vertical onPress={() => this.props.navigation.navigate('Map')}>

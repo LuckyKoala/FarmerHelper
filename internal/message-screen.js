@@ -88,7 +88,7 @@ export default class MessageScreen extends Component {
                     <Footer>
                         <FooterTab>
                             <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
-                                <Icon name="flame" />
+                                <Icon name="md-sunny" />
                                 <Text>农事</Text>
                             </Button>
                             <Button vertical onPress={() => this.props.navigation.navigate('Map')}>
