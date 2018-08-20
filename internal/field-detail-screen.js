@@ -17,6 +17,7 @@ export default class FieldDetailScreen extends Component {
 
     async asyncLoadData() {
         const field = this.props.navigation.getParam('field');
+        console.log(`Field: ${JSON.stringify(field)}`);
         let uid = field.uid;
         if(uid==null || uid==-1) return '佚名';
         let user = await db.user.get(uid);
@@ -65,7 +66,15 @@ export default class FieldDetailScreen extends Component {
                         <Card style={{flex: 0}}>
                             <CardItem>
                                 <Left>
-                                    <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} />
+                                    <Button
+                                        transparent
+                                        onPress={() => this.props.navigation.navigate('MessageDetail', {
+                                            messageBody: { id: -1 },
+                                            targetId: field.uid
+                                        })}
+                                    >
+                                        <Thumbnail source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg' }} />
+                                    </Button>
                                     <Body>
                                     <Text>{nickname}</Text>
                                     <Text note>{field.date}</Text>
