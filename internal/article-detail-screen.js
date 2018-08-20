@@ -2,7 +2,8 @@ import React, { Component  } from 'react';
 import {
     Container, Header, Title, Content,
     Text, Button, Icon,
-    Left, Right, Body
+    Left, Right, Body,
+    Card, CardItem, Thumbnail
 } from 'native-base';
 import { Dimensions, View, Image } from 'react-native';
 
@@ -32,12 +33,26 @@ export default class ArticleDetailScreen extends Component {
                 </Header>
 
                 <Content padder>
-                    <Text style={{ fontWeight: 'bold' }}>{article.title}</Text>
-                    <Image
-                        style={{ width: BannerWidth, height: BannerHeight }}
-                        source={{ uri: article.image }}
-                    />
-                    <Text>{article.content}</Text>
+                    <Card style={{flex: 0}}>
+                        <CardItem>
+                            <Left>
+                                <Thumbnail source={{uri: 'Image URL'}} />
+                                <Body>
+                                    <Text>NativeBase</Text>
+                                    <Text note>April 15, 2016</Text>
+                                </Body>
+                            </Left>
+                        </CardItem>
+                        <CardItem>
+                            <Body>
+                                <Text style={{ fontWeight: 'bold' }}>{article.title}</Text>
+                                <Image source={{uri: article.image}} style={{height: BannerHeight, width: BannerWidth, flex: 1}}/>
+                                <Text>
+                                    {article.content}
+                                </Text>
+                            </Body>
+                        </CardItem>
+                    </Card>
                 </Content>
             </Container>
         );

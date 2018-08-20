@@ -5,7 +5,10 @@ import {
     Left, Right, Body,
     Card, CardItem, Thumbnail
 } from 'native-base';
-import { Image, View, ActivityIndicator } from 'react-native';
+import { Image, View, ActivityIndicator, Dimensions } from 'react-native';
+
+//const BannerWidth = Dimensions.get('window').width;
+//const BannerHeight = 260;
 
 export default class FieldDetailScreen extends Component {
     state = {
@@ -71,7 +74,6 @@ export default class FieldDetailScreen extends Component {
                             </CardItem>
                             <CardItem>
                                 <Body>
-                                    <Image source={{uri: 'https://upload.wikimedia.org/wikipedia/commons/9/9b/Inernet.jpg'}} style={{height: 200, width: 200, flex: 1}}/>
                                     <Text>
                                         {field.desc}
                                     </Text>
