@@ -4,7 +4,9 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { MapView, Location } from 'react-native-baidumap-sdk';
+import TimerMixin from 'react-timer-mixin';
 import icon from '../assets/ic_my_location.png';
+import reactMixin from 'react-mixin';
 
 const style = StyleSheet.create({
   button: {
@@ -23,7 +25,7 @@ const style = StyleSheet.create({
   },
 });
 
-export default class MapViewExample extends Component {
+class MapScreen extends Component {
     state = {
         externalData: null,
     };
@@ -73,11 +75,8 @@ export default class MapViewExample extends Component {
 
         const center = this.props.navigation.getParam('center', false);
         if(center) {
-            this.setState({location: center});
-            this.location();
-            //FIXME:
-            //Possible Unhandled Promise Rejection
-            //TypeError: undefined is not an object (evaluating '_this.mapView.setStatus')
+            let that = this;
+            this.setTimeout(() => this.mapView.setStatus({ center: center }, 1000), 500);
         }
     }
 
@@ -121,3 +120,6 @@ export default class MapViewExample extends Component {
         }
     }
 }
+
+reactMixin(MapScreen.prototype, TimerMixin);
+export default MapScreen;
