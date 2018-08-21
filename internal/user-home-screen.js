@@ -5,10 +5,11 @@ import {
     Left, Right, Body,
     List, ListItem,
     Thumbnail,
-    Footer, FooterTab
+    Footer, FooterTab,
+    ActionSheet
 } from 'native-base';
 import {
-    View, ActivityIndicator
+    View, ActivityIndicator, TouchableOpacity
 } from 'react-native';
 
 export default class UserHomeScreen extends Component {
@@ -45,6 +46,25 @@ export default class UserHomeScreen extends Component {
     async logout() {
         await db.currentUser.update(0, {id: 0, userId: -1});
         this.props.navigation.navigate('UserLogin');
+    }
+
+    onClick(action) {
+        console.log(action);
+        switch(action) {
+        case 'about':
+            ActionSheet.show(
+              {
+                  options: ["版本更新","帮助","反馈","取消"],
+                cancelButtonIndex: 4,
+                title: "版本 v0.4.1"
+              },
+              buttonIndex => {
+                  console.log(buttonIndex);
+                  //this.setState({ clicked: BUTTONS[buttonIndex] });
+              }
+            );
+            break;
+        }
     }
 
     render() {
@@ -85,50 +105,52 @@ export default class UserHomeScreen extends Component {
                         </ListItem>
                         <ListItem icon>
                             <Left>
-                            <Icon name="bookmark" />
+                                <Icon name="bookmark" />
                             </Left>
                             <Body>
-                            <Text>我的收藏</Text>
+                                <TouchableOpacity onPress={() => this.onClick("collection")}>
+                                    <Text>我的收藏</Text>
+                                </TouchableOpacity>
                             </Body>
                         </ListItem>
                         <ListItem icon>
                             <Left>
-                            <Icon name="cart" />
+                                <Icon name="cart" />
                             </Left>
                             <Body>
-                            <Text>我的钱包</Text>
+                                <TouchableOpacity onPress={() => this.onClick("wallet")}>
+                                    <Text>我的钱包</Text>
+                                </TouchableOpacity>
                             </Body>
                         </ListItem>
                         <ListItem icon>
                             <Left>
-                            <Icon name="person" />
+                                <Icon name="person" />
                             </Left>
                             <Body>
-                            <Text>信用评级</Text>
+                                <TouchableOpacity onPress={() => this.onClick("credit")}>
+                                    <Text>信用评级</Text>
+                                </TouchableOpacity>
                             </Body>
                         </ListItem>
                         <ListItem icon>
                             <Left>
-                            <Icon name="archive" />
+                                <Icon name="archive" />
                             </Left>
                             <Body>
-                            <Text>历史记录</Text>
+                                <TouchableOpacity onPress={() => this.onClick("archive")}>
+                                    <Text>历史记录</Text>
+                                </TouchableOpacity>
                             </Body>
                         </ListItem>
                         <ListItem icon>
                             <Left>
-                            <Icon name="medkit" />
+                                <Icon name="ios-information-circle" />
                             </Left>
                             <Body>
-                            <Text>帮助</Text>
-                            </Body>
-                        </ListItem>
-                        <ListItem icon>
-                            <Left>
-                            <Icon name="hand" />
-                            </Left>
-                            <Body>
-                            <Text>反馈/投诉</Text>
+                                <TouchableOpacity onPress={() => this.onClick("about")}>
+                                    <Text>关于农事帮与帮助</Text>
+                                </TouchableOpacity>
                             </Body>
                         </ListItem>
                         </List>
