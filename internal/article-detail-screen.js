@@ -38,8 +38,8 @@ export default class ArticleDetailScreen extends Component {
                             <Left>
                                 <Thumbnail source={{uri: 'Image URL'}} />
                                 <Body>
-                                    <Text>NativeBase</Text>
-                                    <Text note>April 15, 2016</Text>
+                                    <Text>官方推送</Text>
+                                    <Text note>2018.8.20</Text>
                                 </Body>
                             </Left>
                         </CardItem>

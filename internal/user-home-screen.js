@@ -179,7 +179,7 @@ export default class UserHomeScreen extends Component {
                                 <Text>我</Text>
                             </Button>
                         </FooterTab>
-                </Footer>
+                    </Footer>
 
 
                 </Container>
