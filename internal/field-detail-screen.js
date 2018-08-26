@@ -83,6 +83,7 @@ export default class FieldDetailScreen extends Component {
                             </CardItem>
                             <CardItem>
                                 <Body>
+                                    <Text style={{ fontWeight: 'bold' }}>{field.title}</Text>
                                     <Text>
                                         {field.desc}
                                     </Text>

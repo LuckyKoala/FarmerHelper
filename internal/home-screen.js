@@ -102,7 +102,7 @@ export default class HomeScreen extends Component {
                                 renderRow={(item) =>
                                     <ListItem>
                                         <TouchableOpacity onPress={() => this.showField(item)}>
-                                            <Text>{item.desc}</Text>
+                                            <Text>{item.title}</Text>
                                         </TouchableOpacity>
                                     </ListItem>
                             }>
