@@ -51,7 +51,11 @@ export default class HomeScreen extends Component {
         let articles = await db.article.getAll();
         let fields = await db.field.getAll();
         let persons = await db.person.getAll();
-        return { articles, fields, persons };
+        return {
+            articles: articles.slice(0,4),
+            fields: fields.slice(0,4),
+            persons: persons.slice(0,4)
+        };
     }
 
     componentDidMount() {
@@ -65,6 +69,10 @@ export default class HomeScreen extends Component {
 
     showFieldList() {
         this.props.navigation.navigate('Search', {search: {category: 'field', keyword: ''}});
+    }
+    
+    showPersonList() {
+        this.props.navigation.navigate('Search', {search: {category: 'person', keyword: ''}});
     }
 
     render() {
@@ -123,6 +131,13 @@ export default class HomeScreen extends Component {
                                     </ListItem>
                             }>
                             </List>
+                        <Button
+                            block
+                            style={{backgroundColor: '#34A853'}}
+                            onPress={() => this.showPersonList()}
+                        >
+                            <Text style={{fontSize: 20, color: '#FFF'}}>查看更多</Text>
+                        </Button>
                         </Tab>
                     </Tabs>
                     </View>
