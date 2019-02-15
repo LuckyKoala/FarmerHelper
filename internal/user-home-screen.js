@@ -56,7 +56,7 @@ export default class UserHomeScreen extends Component {
               {
                   options: ["版本更新","帮助","反馈","取消"],
                 cancelButtonIndex: 4,
-                title: "版本 v0.4.1"
+                title: "版本 v0.4.3"
               },
               buttonIndex => {
                   console.log(buttonIndex);
