@@ -53,7 +53,7 @@ export default class SearchScreen extends Component {
 
     openConversation(person) {
         this.props.navigation.navigate('MessageDetail', {
-            targetId: person.id,
+            targetId: person.personId,
             messageBody: { id: -1 }
         });
     }

@@ -3,12 +3,14 @@
         id: 0,
         nick: '三丰',
         age: 41,
+        personId: 1,
         desc: '忠厚老实，干活勤奋努力，待业在家'
     },
     {
         id: 1,
         nick: '石头',
         age: 45,
+        personId: 3,
         desc: '忠厚老实，干活勤奋努力，待业在家'
     },
 ]
