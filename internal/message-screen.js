@@ -13,6 +13,15 @@ export default class MessageScreen extends Component {
         this.props.navigation.navigate('MessageDetail', { messageBody: message});
     }
 
+    newConversation() {
+        //Navigate to full person list
+        let search = {
+            category: "person",
+            keyword: ""
+        };
+        this.props.navigation.navigate('Search', { search });
+    }
+
     state = {
         externalData: null,
     };
@@ -65,7 +74,8 @@ export default class MessageScreen extends Component {
                     </Body>
                     <Right>
                         <Button
-                        transparent
+                            transparent
+                            onPress={() => this.newConversation()}
                         >
                         <Icon name="add" />
                         </Button>

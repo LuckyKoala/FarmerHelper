@@ -51,8 +51,16 @@ export default class SearchScreen extends Component {
         this.props.navigation.navigate('MachineDetail', { machine });
     }
 
+    openConversation(person) {
+        this.props.navigation.navigate('MessageDetail', {
+            targetId: person.id,
+            messageBody: { id: -1 }
+        });
+    }
+
     show(name, val) {
         if(name==='field') this.showField(val);
+        else if(name==='person') this.openConversation(val);
     }
 
     render() {
@@ -73,7 +81,7 @@ export default class SearchScreen extends Component {
                             renderRow={(item) =>
                                 <ListItem>
                                        <TouchableOpacity onPress={() => this.show(category, item)}>
-                                        <Text>{item.desc}</Text>
+                                       <Text>{item.nick || ""} {item.desc}</Text>
                                     </TouchableOpacity>
                                 </ListItem>
                             }>
